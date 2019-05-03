@@ -4,9 +4,19 @@ import './assets/style.css';
 import Icon from './assets/images/timg.jpg';
 import Data from './data.xml';
 
+import React from 'react';
+import ReactDOM from 'react-dom'
+import App from './js/rn'
+
 import './assets/main.less';
 import './assets/main.scss';
 
+import moment from 'moment';
+import 'moment/locale/zh-CN'
+moment.locale('zh-CN');
+
+let r = moment().endOf('day').fromNow();
+console.log(r)
 
 if(DEV){
     console.log(DEV)
@@ -39,3 +49,4 @@ function component(){
 }
 component();
 document.body.appendChild(component());
+ReactDOM.render(<App/>, document.getElementById('root'));

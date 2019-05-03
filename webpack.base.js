@@ -38,6 +38,7 @@ module.exports = {
         }
     },
     module: {
+        noParse:/jquery/, //不去解析jquery的依赖库
         rules: [
             //eslint 可以打开
             /*{
@@ -65,7 +66,7 @@ module.exports = {
                         presets:[ ['@babel/preset-env',{
                             corejs: '2.0',
                             useBuiltIns:'usage'
-                        }]],
+                        }],'@babel/preset-react'],
                         plugins:["@babel/plugin-transform-runtime"]
                     }
                 }
@@ -141,6 +142,8 @@ module.exports = {
         new Webpack.ProvidePlugin({
             $:'jquery' //在每个模块中都注入 $
         }),
+        //忽略moment包中的.locale目录,优化打包大小
+        new Webpack.IgnorePlugin(/\.\/locale/,/moment/),
         new HtmlWebpackPlugin({
             title: 'Output Management',
             filename: 'index.html',

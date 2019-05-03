@@ -12,9 +12,9 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 const Webpack = require('webpack');
-const  CopyPlugin = require('copy-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 
-console.log(path.resolve(__dirname,'src'))
+console.log(path.resolve(__dirname, 'src'))
 
 module.exports = {
     mode: "development",//默认两种模式 production,development
@@ -27,11 +27,11 @@ module.exports = {
         contentBase: path.join(__dirname, "dist"),//静态服务文件夹
         compress: true,
         port: 8080,
-        proxy:{
+        proxy: {
             /*'api':{
-                target:'http://localhost:3000',
-                pathRewrite:{'/api':''}//可以过滤api前缀
-            }*/
+             target:'http://localhost:3000',
+             pathRewrite:{'/api':''}//可以过滤api前缀
+             }*/
         }
     },
     output: {
@@ -39,49 +39,51 @@ module.exports = {
         path: path.resolve(__dirname, 'dist'),//路径必须是一个绝对路径
         publicPath: "/"
     },
-    watch:true,//监控代码 只要有代码改动就打包 npm run build
-    watchOptions:{
-        poll:1000, //每秒问我 1000次
+    watch: true,//监控代码 只要有代码改动就打包 npm run build
+    watchOptions: {
+        poll: 1000, //每秒问我 1000次
         aggregateTimeout: 500, //500ms内只打包一次 防抖
-        ignored:/node_modules/
+        ignored: /node_modules/
     },
-    resolve:{//解析第三方模块
-        modules:[path.resolve('node_modules')],
-        extensions:['.js','.css','.scss','.less','.json'],
-        alias:{
-            '@': path.resolve(__dirname,'src')
+    resolve: {//解析第三方模块
+        modules: [path.resolve('node_modules')],
+        extensions: ['.js', '.css', '.scss', '.less', '.json'],
+        alias: {
+            '@': path.resolve(__dirname, 'src')
         }
     },
     module: {
         rules: [
             //eslint 可以打开
             /*{
-                test:/\.js$/,
-                include:path.resolve(__dirname,'src'),
-                use:{
-                    loader:'eslint-loader',
-                    options:{
-                        enforce:'pre'//在js babel-loader前面执行
-                    }
-                }
-            },*/
+             test:/\.js$/,
+             include:path.resolve(__dirname,'src'),
+             use:{
+             loader:'eslint-loader',
+             options:{
+             enforce:'pre'//在js babel-loader前面执行
+             }
+             }
+             },*/
             /*内联loader全局暴露*/
             /*{
-               test:require.resolve('jquery'),
-                use:'expose-loader?$'
-            },*/
+             test:require.resolve('jquery'),
+             use:'expose-loader?$'
+             },*/
             {
-                test:/\.js$/,
-                include:path.resolve(__dirname,'src'),
-                exclude:/node_modules/,
-                use:{
-                    loader:'babel-loader',
-                    options:{//es6 转化为es5
-                        presets:[ ['@babel/preset-env',{
+                test: /\.js$/,
+                include: path.resolve(__dirname, 'src'),
+                exclude: /node_modules/,
+                use: {
+                    loader: 'babel-loader',
+                    options: {//es6 转化为es5
+                        presets: [['@babel/preset-env', {
                             corejs: '2.0',
-                            useBuiltIns:'usage'
-                        }]],
-                        plugins:["@babel/plugin-transform-runtime"]
+                            useBuiltIns: 'usage'
+                        }],
+                            '@babel/preset-react'
+                        ],
+                        plugins: ["@babel/plugin-transform-runtime"]
                     }
                 }
             },
@@ -110,10 +112,10 @@ module.exports = {
             {
                 test: /\.(png|jpg|svg|gif)$/,
                 use: {
-                    loader:'url-loader',
-                    options:{
-                        limit:200*1024,// 超过这个用　file-loader 生成真正的图片,否则用url-loader
-                        outputPath:'img/',
+                    loader: 'url-loader',
+                    options: {
+                        limit: 200 * 1024,// 超过这个用　file-loader 生成真正的图片,否则用url-loader
+                        outputPath: 'img/',
                         //publicPath:"http://xxx" //单独给图片加publicPath
                     }
                 }
@@ -121,10 +123,10 @@ module.exports = {
             {
                 test: /\.(woff|woff2|eot|ttf|otf)$/,
                 use: {
-                    loader:'url-loader',
-                    options:{
-                        limit:1,// 超过这个用　file-loader 生成真正的图片,否则用url-loader
-                        outputPath:'fonts/'
+                    loader: 'url-loader',
+                    options: {
+                        limit: 1,// 超过这个用　file-loader 生成真正的图片,否则用url-loader
+                        outputPath: 'fonts/'
                     }
                 }
             },
@@ -138,20 +140,20 @@ module.exports = {
             }
         ]
     },
-    externals:{
-        //jquery:'$' //忽略 不打包这个 , 在外面cdn引入的情况
+    externals: {
+        jquery:'$' //忽略 不打包这个 , 在外面cdn引入的情况
     },
     plugins: [
         new CleanWebpackPlugin(),
         //环境定义
         new Webpack.DefinePlugin({
-            DEV:"'dev'" //在全局都可以使用DEV这个环境变量了
+            DEV: "'dev'" //在全局都可以使用DEV这个环境变量了
         }),
         new MiniCssExtractPlugin({
             filename: 'css/[name]-[hash:8].css'
         }),
         new Webpack.ProvidePlugin({
-            $:'jquery' //在每个模块中都注入 $
+            $: 'jquery' //在每个模块中都注入 $
         }),
         new HtmlWebpackPlugin({
             title: 'Output Management',
@@ -171,7 +173,7 @@ module.exports = {
             chunks: ['app'] // 引入的代码块
         }),
         new CopyPlugin([
-            { from: './static', to: './static' }
+            {from: './static', to: './static'}
         ]),
         //版权声明 webpack内置插件
         new Webpack.BannerPlugin('make 2019 by polyna')
@@ -180,10 +182,10 @@ module.exports = {
         //用了optimize-css-assets-webpack-plugin这个插件就必须用js压缩插件,否则js不会被压缩
         minimizer: [
             new TerserJSPlugin({
-                cache:true,
-                parallel:true,//是否是并发打包的
-                sourceMap:true,//源码映射
-                exclude:/\/node_modules/
+                cache: true,
+                parallel: true,//是否是并发打包的
+                sourceMap: true,//源码映射
+                exclude: /\/node_modules/
             }),
             new OptimizeCSSAssetsPlugin({})],
     },
