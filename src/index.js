@@ -3,6 +3,9 @@ import './assets/style.css';
 import Icon from './assets/images/timg.jpg';
 import Data from './data.xml';
 
+import './assets/main.less';
+import './assets/main.scss';
+
 import printMe from './js/print'
 printMe();
 function component(){

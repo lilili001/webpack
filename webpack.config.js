@@ -24,7 +24,38 @@ module.exports = {
         rules:[
             {
                 test:/\.css$/,
-                use:['style-loader','css-loader']
+                use:[{
+                    loader:'style-loader',
+                    options:{
+                        insertAt:'top' //插入到header最顶部
+                    }
+                },'css-loader']
+            },
+            {
+                test:/\.less/,
+                use:[
+                        {
+                            loader:'style-loader',
+                            options:{
+                                insertAt:'top' //插入到header最顶部
+                            }
+                        },
+                        'css-loader',
+                        'less-loader'
+                    ]
+            },
+            {
+                test:/\.scss/,
+                use:[
+                    {
+                        loader:'style-loader',
+                        options:{
+                            insertAt:'top' //插入到header最顶部
+                        }
+                    },
+                    'css-loader',
+                    'sass-loader'
+                ]
             },
             {
                 test:/\.(png|svg|jpg|gif)$/,
