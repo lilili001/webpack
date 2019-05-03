@@ -10,9 +10,12 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const Webpack = require('webpack');
 const  CopyPlugin = require('copy-webpack-plugin');
 
-console.log(path.resolve(__dirname,'src'))
+function resolve(dir) {
+    return path.join(__dirname, '..', dir)
+}
 
 module.exports = {
+    context: path.resolve(__dirname, '../'),
     entry: {
         app: './src/index.js',
         print: './src/js/print.js'
@@ -21,7 +24,7 @@ module.exports = {
 
     output: {
         filename: 'js/[name]-[hash:8].bundle.js',
-        path: path.resolve(__dirname, 'dist'),//路径必须是一个绝对路径
+        path: path.resolve(__dirname, '../dist'),//路径必须是一个绝对路径
         publicPath: "/"
     },
     watch:true,//监控代码 只要有代码改动就打包 npm run build
@@ -34,7 +37,7 @@ module.exports = {
         modules:[path.resolve('node_modules')],
         extensions:['.js','.css','.scss','.less','.json'],
         alias:{
-            '@': path.resolve(__dirname,'src')
+            '@': resolve('src')
         }
     },
     module: {
@@ -58,7 +61,7 @@ module.exports = {
             },*/
             {
                 test:/\.js$/,
-                include:path.resolve(__dirname,'src'),
+                include:path.resolve(__dirname,'../src'),
                 exclude:/node_modules/,
                 use:{
                     loader:'babel-loader',
@@ -162,7 +165,7 @@ module.exports = {
             chunks: ['app'] // 引入的代码块
         }),
         new CopyPlugin([
-            { from: './static', to: './static' }
+            { from: resolve('static'), to: resolve('dist/static') }
         ]),
         //版权声明 webpack内置插件
         new Webpack.BannerPlugin('make 2019 by polyna')

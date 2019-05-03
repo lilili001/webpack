@@ -1,5 +1,6 @@
 const {smart} = require('webpack-merge');
-const base = require('./webpack.config');
+const base = require('./webpack.base.js');
+
 const TerserJSPlugin = require('terser-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
