@@ -1,5 +1,6 @@
-const path = require('path');
+//require("@babel/polyfill");
 
+const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 
@@ -11,7 +12,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 module.exports = {
-    mode: "production",//默认两种模式 production,development
+    mode: "development",//默认两种模式 production,development
     entry: {
         app: './src/index.js',
         print: './src/js/print.js'
@@ -29,6 +30,21 @@ module.exports = {
     },
     module: {
         rules: [
+            {
+                test:/\.js$/,
+                include:path.resolve(__dirname,'src'),
+                exclude:/node_modules/,
+                use:{
+                    loader:'babel-loader',
+                    options:{//es6 转化为es5
+                        presets:[ ['@babel/preset-env',{
+                            corejs: '2.0',
+                            useBuiltIns:'usage'
+                        }]],
+                        plugins:["@babel/plugin-transform-runtime"]
+                    }
+                }
+            },
             {
                 test: /\.css$/,
                 use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader']
@@ -91,7 +107,7 @@ module.exports = {
             chunksSortMode: 'dependency',
             chunks: ['app'] // 入口模块
         })
-    ],
+    ],//用于生产的
     optimization: {
         //用了optimize-css-assets-webpack-plugin这个插件就必须用js压缩插件,否则js不会被压缩
         minimizer: [

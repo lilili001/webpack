@@ -24,6 +24,8 @@ function component(){
     btn.onClick = printMe;
     element.appendChild(btn);
 
+    [1, 2, 3].map((n) => n + 1);
+    'aasdf'.includes('f');
     return element;
 }
 component();

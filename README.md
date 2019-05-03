@@ -81,3 +81,8 @@ new MiniCssExtractPlugin({
 ```
 
 autoprefixer:postcss-loader
+
+# babel
+```$xslt
+npm i -D babel-loader @babel/core @babel/preset-env
+```
