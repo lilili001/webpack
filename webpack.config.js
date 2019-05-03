@@ -1,4 +1,4 @@
-//require("@babel/polyfill");
+//require("@babel/polyfill"); 或者在下面的配置中使用 useBuiltIns：'usage'
 
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -30,6 +30,17 @@ module.exports = {
     },
     module: {
         rules: [
+            //eslint 可以打开
+            /*{
+                test:/\.js$/,
+                include:path.resolve(__dirname,'src'),
+                use:{
+                    loader:'eslint-loader',
+                    options:{
+                        enforce:'pre'//在js babel-loader前面执行
+                    }
+                }
+            },*/
             {
                 test:/\.js$/,
                 include:path.resolve(__dirname,'src'),
