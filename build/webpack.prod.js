@@ -10,6 +10,12 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 module.exports = smart(base,{
     mode:'production',
     devtool:false,
+    // watch:true,//监控代码 只要有代码改动就打包 npm run build
+    // watchOptions:{
+    //     poll:1000, //每秒问我 1000次
+    //     aggregateTimeout: 500, //500ms内只打包一次 防抖
+    //     ignored:/node_modules/
+    // },
     //用于生产的
     optimization: {
         splitChunks:{

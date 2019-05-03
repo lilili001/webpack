@@ -21,17 +21,10 @@ module.exports = {
         print: './src/js/print.js'
     },
     devtool: 'cheap-module-eval-source-map',//前台报错可以直接查看到哪个文件报错
-
     output: {
         filename: 'js/[name]-[hash:8].bundle.js',
         path: path.resolve(__dirname, '../dist'),//路径必须是一个绝对路径
         publicPath: "/"
-    },
-    watch:true,//监控代码 只要有代码改动就打包 npm run build
-    watchOptions:{
-        poll:1000, //每秒问我 1000次
-        aggregateTimeout: 500, //500ms内只打包一次 防抖
-        ignored:/node_modules/
     },
     resolve:{//解析第三方模块
         modules:[path.resolve('node_modules')],
