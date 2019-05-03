@@ -14,6 +14,8 @@ const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const Webpack = require('webpack');
 const  CopyPlugin = require('copy-webpack-plugin');
 
+console.log(path.resolve(__dirname,'src'))
+
 module.exports = {
     mode: "development",//默认两种模式 production,development
     entry: {
@@ -42,6 +44,13 @@ module.exports = {
         poll:1000, //每秒问我 1000次
         aggregateTimeout: 500, //500ms内只打包一次 防抖
         ignored:/node_modules/
+    },
+    resolve:{//解析第三方模块
+        modules:[path.resolve('node_modules')],
+        extensions:['.js','.css','.scss','.less','.json'],
+        alias:{
+            '@': path.resolve(__dirname,'src')
+        }
     },
     module: {
         rules: [
@@ -134,6 +143,10 @@ module.exports = {
     },
     plugins: [
         new CleanWebpackPlugin(),
+        //环境定义
+        new Webpack.DefinePlugin({
+            DEV:"'dev'" //在全局都可以使用DEV这个环境变量了
+        }),
         new MiniCssExtractPlugin({
             filename: 'css/[name]-[hash:8].css'
         }),

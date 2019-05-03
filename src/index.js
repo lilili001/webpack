@@ -7,6 +7,13 @@ import Data from './data.xml';
 import './assets/main.less';
 import './assets/main.scss';
 
+
+if(DEV){
+    console.log(DEV)
+}else{
+    console.log('production')
+}
+
 import printMe from './js/print'
 printMe();
 function component(){
