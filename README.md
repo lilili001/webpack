@@ -86,3 +86,29 @@ autoprefixer:postcss-loader
 ```$xslt
 npm i -D babel-loader @babel/core @babel/preset-env
 ```
+
+# 暴露变量 windows下可以访问
+
+- 内联loader
+
+```$xslt
+import $ from 'expose-loader?$!jquery'
+```
+这样`window.$`就可以访问了
+
+或者觉着这样引入太麻烦了，可以在wepack中配置
+modules:
+```$xslt
+{
+    test:require.resolve('jquery'),
+    use:'expose-loader?$'
+}
+```
+再引入的时候 用`import $ from jquery`即可
+
+或者觉得这样还麻烦,直接使用模块注入的方式配置更方便:
+```$xslt
+new Webpack.ProvidePlugin({
+            'jquery':'$'
+        }),
+```

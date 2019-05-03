@@ -11,6 +11,8 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 // 压缩　css
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
+const Webpack = require('webpack');
+
 module.exports = {
     mode: "development",//默认两种模式 production,development
     entry: {
@@ -24,7 +26,7 @@ module.exports = {
         port: 8080
     },
     output: {
-        filename: '[name]-[hash:8].bundle.js',
+        filename: 'js/[name]-[hash:8].bundle.js',
         path: path.resolve(__dirname, 'dist'),//路径必须是一个绝对路径
         publicPath: "/"
     },
@@ -40,6 +42,11 @@ module.exports = {
                         enforce:'pre'//在js babel-loader前面执行
                     }
                 }
+            },*/
+            /*内联loader全局暴露*/
+            /*{
+               test:require.resolve('jquery'),
+                use:'expose-loader?$'
             },*/
             {
                 test:/\.js$/,
@@ -79,12 +86,25 @@ module.exports = {
                 ]
             },
             {
-                test: /\.(png|svg|jpg|gif)$/,
-                use: ['file-loader']
+                test: /\.(png|jpg|svg|gif)$/,
+                use: {
+                    loader:'url-loader',
+                    options:{
+                        limit:200*1024,// 超过这个用　file-loader 生成真正的图片,否则用url-loader
+                        outputPath:'img/',
+                        //publicPath:"http://xxx" //单独给图片加publicPath
+                    }
+                }
             },
             {
                 test: /\.(woff|woff2|eot|ttf|otf)$/,
-                use: ['file-loader']
+                use: {
+                    loader:'url-loader',
+                    options:{
+                        limit:1,// 超过这个用　file-loader 生成真正的图片,否则用url-loader
+                        outputPath:'fonts/'
+                    }
+                }
             },
             {
                 test: /\.(csv|tsv)$/,
@@ -96,10 +116,16 @@ module.exports = {
             }
         ]
     },
+    externals:{
+        //jquery:'$' //忽略 不打包这个 , 在外面cdn引入的情况
+    },
     plugins: [
         new CleanWebpackPlugin(),
         new MiniCssExtractPlugin({
-            filename: '[name]-[hash:8].css'
+            filename: 'css/[name]-[hash:8].css'
+        }),
+        new Webpack.ProvidePlugin({
+            $:'jquery' //在每个模块中都注入 $
         }),
         new HtmlWebpackPlugin({
             title: 'Output Management',

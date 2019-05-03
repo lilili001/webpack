@@ -1,4 +1,5 @@
 import _ from 'lodash';
+//import $ from 'jquery';
 import './assets/style.css';
 import Icon from './assets/images/timg.jpg';
 import Data from './data.xml';
