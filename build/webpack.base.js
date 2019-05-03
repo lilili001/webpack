@@ -145,28 +145,11 @@ module.exports = {
         new Webpack.ProvidePlugin({
             $:'jquery' //在每个模块中都注入 $
         }),
-        new Webpack.DllReferencePlugin({
-           manifest:path.resolve(__dirname,'../','manifest.json')
-        }),
+        // new Webpack.DllReferencePlugin({
+        //    manifest:path.resolve(__dirname,'../','manifest.json')
+        // }),
         //忽略moment包中的.locale目录,优化打包大小
         new Webpack.IgnorePlugin(/\.\/locale/,/moment/),
-        new HtmlWebpackPlugin({
-            title: 'Output Management',
-            filename: 'index.html',
-            template: 'index.html',
-            inject: true,
-            minify: {
-                removeComments: true,
-                collapseWhitespace: true,
-                removeAttributeQuotes: true
-                // more options:
-                // https://github.com/kangax/html-minifier#options-quick-reference
-            },
-            hash: true,
-            // necessary to consistently work with multiple chunks via CommonsChunkPlugin
-            chunksSortMode: 'dependency',
-            chunks: ['app'] // 引入的代码块
-        }),
         new CopyPlugin([
             { from: resolve('static'), to: resolve('dist/static') }
         ]),

@@ -5,9 +5,10 @@
   "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack --config ./build/webpack.react.js && webpack --config ./build/webpack.prod.js",
+    "dll":"webpack --config ./build/webpack.react.js",
+    "build": "webpack --config ./build/webpack.prod.js",
     "watch": "webpack --watch",
-    "start": "webpack --config ./build/webpack.react.js && webpack-dev-server --open --config ./build/webpack.dev.js"
+    "start": "webpack-dev-server --open --config ./build/webpack.dev.js"
   },
   "author": "",
   "license": "ISC",

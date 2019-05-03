@@ -9,10 +9,10 @@ module.exports = {
     mode:'production',
     entry:{
         //test:resolve('src') + '/test.js'
-        react:['react','react-dom']
+        react:['react','react-dom','moment','lodash']
     },
     output:{
-        filename:'_dll_[name].js',
+        filename:'js/_dll_[name].js',
         path:path.resolve(__dirname,'../dist'),
         library:'_dll_[name]',
         //libraryTarget:'commentjs' //commonjs ,var
