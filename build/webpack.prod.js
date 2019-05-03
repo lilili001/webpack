@@ -10,11 +10,6 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 module.exports = smart(base,{
     mode:'production',
     devtool:false,
-    output: {
-        filename: 'js/[name]-[hash:8].bundle.js',
-        path: path.resolve(__dirname, '../dist'),//路径必须是一个绝对路径
-        publicPath: "http://localhost:63342/webpack-learn/dist/"
-    },
     //用于生产的
     optimization: {
         splitChunks:{

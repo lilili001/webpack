@@ -154,7 +154,8 @@ module.exports = {
             { from: resolve('static'), to: resolve('dist/static') }
         ]),
         //版权声明 webpack内置插件
-        new Webpack.BannerPlugin('make 2019 by polyna')
+        new Webpack.BannerPlugin('make 2019 by polyna'),
+
     ],
 };
 
