@@ -27,6 +27,7 @@ function component(){
 
     [1, 2, 3].map((n) => n + 1);
     'aasdf'.includes('f');
+    console.log(111)
     return element;
 }
 component();

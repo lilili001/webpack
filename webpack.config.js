@@ -12,6 +12,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 const Webpack = require('webpack');
+const  CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
     mode: "development",//默认两种模式 production,development
@@ -19,7 +20,7 @@ module.exports = {
         app: './src/index.js',
         print: './src/js/print.js'
     },
-    devtool: 'inline-source-map',//前台报错可以直接查看到哪个文件报错
+    devtool: 'cheap-module-eval-source-map',//前台报错可以直接查看到哪个文件报错
     devServer: {//开发环境下
         contentBase: path.join(__dirname, "dist"),//静态服务文件夹
         compress: true,
@@ -29,6 +30,12 @@ module.exports = {
         filename: 'js/[name]-[hash:8].bundle.js',
         path: path.resolve(__dirname, 'dist'),//路径必须是一个绝对路径
         publicPath: "/"
+    },
+    watch:true,//监控代码 只要有代码改动就打包 npm run build
+    watchOptions:{
+        poll:1000, //每秒问我 1000次
+        aggregateTimeout: 500, //500ms内只打包一次 防抖
+        ignored:/node_modules/
     },
     module: {
         rules: [
@@ -142,8 +149,13 @@ module.exports = {
             hash: true,
             // necessary to consistently work with multiple chunks via CommonsChunkPlugin
             chunksSortMode: 'dependency',
-            chunks: ['app'] // 入口模块
-        })
+            chunks: ['app'] // 引入的代码块
+        }),
+        new CopyPlugin([
+            { from: './static', to: './static' }
+        ]),
+        //版权声明 webpack内置插件
+        new Webpack.BannerPlugin('make 2019 by polyna')
     ],//用于生产的
     optimization: {
         //用了optimize-css-assets-webpack-plugin这个插件就必须用js压缩插件,否则js不会被压缩
