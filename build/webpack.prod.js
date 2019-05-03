@@ -6,6 +6,7 @@ const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 module.exports = smart(base,{
     mode:'production',
+    devtool:false,
     //用于生产的
     optimization: {
         //用了optimize-css-assets-webpack-plugin这个插件就必须用js压缩插件,否则js不会被压缩

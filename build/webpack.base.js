@@ -134,7 +134,7 @@ module.exports = {
         //jquery:'$' //忽略 不打包这个 , 在外面cdn引入的情况
     },
     plugins: [
-        new CleanWebpackPlugin(),
+        //new CleanWebpackPlugin(),
         //环境定义
         new Webpack.DefinePlugin({
             DEV:"'dev'" //在全局都可以使用DEV这个环境变量了
@@ -144,6 +144,9 @@ module.exports = {
         }),
         new Webpack.ProvidePlugin({
             $:'jquery' //在每个模块中都注入 $
+        }),
+        new Webpack.DllReferencePlugin({
+           manifest:path.resolve(__dirname,'../','manifest.json')
         }),
         //忽略moment包中的.locale目录,优化打包大小
         new Webpack.IgnorePlugin(/\.\/locale/,/moment/),
